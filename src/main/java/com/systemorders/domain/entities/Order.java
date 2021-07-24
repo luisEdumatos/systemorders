@@ -2,6 +2,7 @@ package com.systemorders.domain.entities;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.systemorders.domain.entities.enums.OrderStatus;
 import lombok.*;
 
 import javax.persistence.*;
@@ -24,6 +25,8 @@ public class Order {
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
     private Instant moment;
+
+    private OrderStatus orderStatus;
 
     @JsonIgnore
     @ManyToOne
