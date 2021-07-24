@@ -25,9 +25,10 @@ public class User {
     private String phone;
     private String password;
 
-    @JsonIgnore
     @OneToMany(
-            mappedBy = "client"
+            mappedBy = "client",
+            cascade = CascadeType.REMOVE
     )
+    @JsonIgnore
     private List<Order> orders = new ArrayList<>();
 }
