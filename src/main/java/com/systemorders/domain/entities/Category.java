@@ -1,5 +1,6 @@
 package com.systemorders.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -20,6 +21,13 @@ public class Category {
     private Long id;
     private String name;
 
-    @Transient
+    public Category(String name) {
+        this.name = name;
+    }
+
+    @JsonIgnore
+    @ManyToMany(
+            mappedBy = "categories"
+    )
     private Set<Product> products = new HashSet<>();
 }

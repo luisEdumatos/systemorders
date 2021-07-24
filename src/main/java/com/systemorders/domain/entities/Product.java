@@ -1,5 +1,6 @@
 package com.systemorders.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
@@ -23,6 +24,19 @@ public class Product {
     private Double price;
     private String imgUrl;
 
-    @Transient
+    public Product(String name, String description, Double price, String imgUrl) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.imgUrl = imgUrl;
+    }
+
+    @JsonIgnore
+    @ManyToMany
+    @JoinTable(
+            name = "tb_product_category",
+            joinColumns = @JoinColumn(name = "product_id"),
+            inverseJoinColumns = @JoinColumn(name = "category_id")
+    )
     private Set<Category> categories = new HashSet<>();
 }
