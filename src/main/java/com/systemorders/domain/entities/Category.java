@@ -1,17 +1,19 @@
 package com.systemorders.domain.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.*;
 import lombok.*;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 @Builder
-@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@Getter
+@Setter
+@ToString
 @Entity
 @Table(name = "tb_category")
 public class Category {
@@ -21,13 +23,26 @@ public class Category {
     private Long id;
     private String name;
 
-    public Category(String name) {
+    @JsonIgnore
+    @ManyToMany(mappedBy = "categories")
+    private Set<Product> products = new HashSet<>();
+
+    public Category(Long id, String name) {
+        super();
+        this.id = id;
         this.name = name;
     }
 
-    @JsonIgnore
-    @ManyToMany(
-            mappedBy = "categories"
-    )
-    private Set<Product> products = new HashSet<>();
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Category category = (Category) o;
+        return Objects.equals(name, category.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
+    }
 }
