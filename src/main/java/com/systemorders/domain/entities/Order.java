@@ -1,12 +1,13 @@
 package com.systemorders.domain.entities;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.*;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import java.time.Instant;
+
 
 @Builder
 @Data
@@ -14,20 +15,18 @@ import java.util.List;
 @NoArgsConstructor
 @EqualsAndHashCode
 @Entity
-@Table(name = "tb_user")
-public class User {
+@Table(name = "tb_order")
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String name;
-    private String email;
-    private String phone;
-    private String password;
+
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
+    private Instant moment;
 
     @JsonIgnore
-    @OneToMany(
-            mappedBy = "client"
-    )
-    private List<Order> orders = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "client_id")
+    private User client;
 }

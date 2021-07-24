@@ -1,7 +1,7 @@
 package com.systemorders.domain.controllers;
 
-import com.systemorders.domain.entities.User;
-import com.systemorders.domain.services.UserService;
+import com.systemorders.domain.entities.Order;
+import com.systemorders.domain.services.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,21 +12,21 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/users")
-public class UserController {
+@RequestMapping(value = "/Orders")
+public class OrderController {
 
     @Autowired
-    private UserService userService;
+    private OrderService OrderService;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
-        List<User> list = userService.findAll();
+    public ResponseEntity<List<Order>> findAll() {
+        List<Order> list = OrderService.findAll();
          return ResponseEntity.ok().body(list);
     }
 
     @GetMapping("/{id}")
-    public  ResponseEntity<User> findById(@PathVariable Long id) {
-        User obj = userService.findById(id);
+    public  ResponseEntity<Order> findById(@PathVariable Long id) {
+        Order obj = OrderService.findById(id);
         return ResponseEntity.ok().body(obj);
     }
 }
